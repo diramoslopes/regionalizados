@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.regionalizados.model.Pessoa;
 import com.regionalizados.repository.Pessoas;
@@ -16,14 +17,16 @@ public class PessoaController {
 	private Pessoas pessoas;
 	
 	@RequestMapping("/novo")
-	public String novo() {
-		return "CadastroPessoa";
+	public ModelAndView novo() {
+		ModelAndView mv = new ModelAndView("CadastroPessoa");
+		return mv;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String salvar(Pessoa pessoa) {
-		
+	public ModelAndView salvar(Pessoa pessoa) {
 		pessoas.save(pessoa);
-		return "CadastroPessoa";
+		ModelAndView mv = new ModelAndView("CadastroPessoa");
+		mv.addObject("mensagem", "Cadastro efetuado com sucesso!");
+		return mv;
 	}
 }
