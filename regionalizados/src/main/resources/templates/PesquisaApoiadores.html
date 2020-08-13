@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{LayoutPadrao}">
+	  
+<head>
+	<title>Pesquisa de Apoiadores</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="panel panel-default">
+		
+	  <div class="panel-heading">
+	  	<div class="clearfix">
+		    <h1 class="panel-title aw-pessoa-panel">Pesquisa de Apoiadores</h1>
+		    <a class="btn btn-link aw-link-panel" href="/apoiador/novo">Novo apoiador</a>
+	  	</div>
+	  </div>
+	  
+	  	<div class="panel-body">
+		  <table class="table table-bordered table-striped">
+		  	
+		  	<thead>
+		  		<tr>
+		  			<th class="text-center col-md-1">#</th>
+		  			<th class="text-center">Nome</th>
+		  			<th>Sobrenome</th>
+		  			<th class="text-center col-md-2">Apoio Confirmado</th>
+		  			<th class="text-center col-md-2">Data de Registro</th>
+		  			<th class="col-md-1">Edição</th>
+		  		</tr>
+		  	</thead>
+		  	
+		  	<tbody>
+		  		<tr th:each="apoiador : ${apoiadores}">
+		  			<td class="text-center" th:text="${apoiador.codigo}"> </td>
+		  			<td class="text-center" th:text="${apoiador.nome}"> </td>
+		  			<td th:text="${apoiador.sobreNome}"> </td>
+		  			<td class="text-center">
+   						<span class="label" th:text="${apoiador.status.descricao}"
+   							th:classappend="${apoiador.Sim ? 'label-success' : 'label-danger'}"></span>
+	   				</td>
+	   				<td class="text-center" th:text="${{apoiador.dataRegistro}}"> </td>
+		  			<td class="text-center"> </td>
+		  		</tr>
+		  	
+		  		<tr>
+		  			<td colspan="6" th:if="${#lists.isEmpty(pessoas)}"> Nenhuma apoiador foi encontrado </td>
+		  		</tr>
+		  	</tbody>
+		  	
+		  </table>
+		</div>
+	 		
+	 </div>
+ </section>
+	
+</html>

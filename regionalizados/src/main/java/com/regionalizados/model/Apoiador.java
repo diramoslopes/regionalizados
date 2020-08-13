@@ -3,6 +3,8 @@ package com.regionalizados.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,42 +14,63 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Pessoa {
+public class Apoiador {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
 	private String nome;
-	private String rg;
+	private String sobreNome;
+	
+	@Enumerated(EnumType.STRING)
+	private StatusApoio status;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
+	private Date dataRegistro;
 	
 	public Long getCodigo() {
 		return codigo;
 	}
+	
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
+	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getRg() {
-		return rg;
+	
+	public String getSobreNome() {
+		return sobreNome;
 	}
-	public void setRg(String rg) {
-		this.rg = rg;
+	public void setSobreNome(String sobreNome) {
+		this.sobreNome = sobreNome;
 	}
-	public Date getDataNascimento() {
-		return dataNascimento;
+	
+	public StatusApoio getStatus() {
+		return status;
 	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+
+	public void setStatus(StatusApoio status) {
+		this.status = status;
+	}
+	
+	public Date getDataRegistro() {
+		return dataRegistro;
+	}
+	
+	public void setDataRegistro(Date dataRegistro) {
+		this.dataRegistro = dataRegistro;
+	}
+	
+	public boolean isSim() {
+		return StatusApoio.SIM.equals(this.status);
 	}
 	
 	@Override
@@ -66,7 +89,7 @@ public class Pessoa {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Apoiador other = (Apoiador) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
