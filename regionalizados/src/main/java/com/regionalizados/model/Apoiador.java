@@ -24,6 +24,12 @@ public class Apoiador {
 	private String sobreNome;
 	
 	@Enumerated(EnumType.STRING)
+	private VinculoApoiador vinculoApoiador;
+	
+	@Enumerated(EnumType.STRING)
+	private SegmentoApoiador segmentoApoiador;
+	
+	@Enumerated(EnumType.STRING)
 	private StatusApoio status;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -53,6 +59,22 @@ public class Apoiador {
 		this.sobreNome = sobreNome;
 	}
 	
+	public VinculoApoiador getVinculoApoiador() {
+		return vinculoApoiador;
+	}
+
+	public void setVinculoApoiador(VinculoApoiador vinculoApoiador) {
+		this.vinculoApoiador = vinculoApoiador;
+	}
+
+	public SegmentoApoiador getSegmentoApoiador() {
+		return segmentoApoiador;
+	}
+
+	public void setSegmentoApoiador(SegmentoApoiador segmentoApoiador) {
+		this.segmentoApoiador = segmentoApoiador;
+	}
+
 	public StatusApoio getStatus() {
 		return status;
 	}

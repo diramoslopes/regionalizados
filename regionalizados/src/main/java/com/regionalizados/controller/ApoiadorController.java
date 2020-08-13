@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.regionalizados.model.Apoiador;
+import com.regionalizados.model.SegmentoApoiador;
 import com.regionalizados.model.StatusApoio;
+import com.regionalizados.model.VinculoApoiador;
 import com.regionalizados.repository.Apoiadores;
 
 @Controller
@@ -46,5 +48,15 @@ public class ApoiadorController {
 	@ModelAttribute("todosStatusApoio")
 	public List<StatusApoio> todosStatusApoio() {
 		return Arrays.asList(StatusApoio.values());
+	}
+	
+	@ModelAttribute("todosVinculos")
+	public List<VinculoApoiador> todosVinculos() {
+		return Arrays.asList(VinculoApoiador.values());
+	}
+	
+	@ModelAttribute("todosSegmentos")
+	public List<SegmentoApoiador> todosSegmentos() {
+		return Arrays.asList(SegmentoApoiador.values());
 	}
 }

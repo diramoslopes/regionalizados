@@ -26,6 +26,8 @@
 		  			<th class="text-center col-md-1">#</th>
 		  			<th class="text-center">Nome</th>
 		  			<th>Sobrenome</th>
+		  			<th class="text-center col-md-2">Vinculo</th>
+		  			<th class="text-center col-md-2">Segmento</th>
 		  			<th class="text-center col-md-2">Apoio Confirmado</th>
 		  			<th class="text-center col-md-2">Data de Registro</th>
 		  			<th class="col-md-1">Edição</th>
@@ -37,6 +39,8 @@
 		  			<td class="text-center" th:text="${apoiador.codigo}"> </td>
 		  			<td class="text-center" th:text="${apoiador.nome}"> </td>
 		  			<td th:text="${apoiador.sobreNome}"> </td>
+		  			<td th:text="${apoiador.vinculoApoiador.descricao}"> </td>
+		  			<td th:text="${apoiador.segmentoApoiador.descricao}"> </td>
 		  			<td class="text-center">
    						<span class="label" th:text="${apoiador.status.descricao}"
    							th:classappend="${apoiador.Sim ? 'label-success' : 'label-danger'}"></span>
