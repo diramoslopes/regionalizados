@@ -11,7 +11,8 @@
  <section layout:fragment="conteudo">
 	<form class="form-horizontal" method="post" action="/apoiador" th:object="${apoiador}">
 		
-		<div th:replace="Mensagem"></div>
+		<div th:replace="MensagemGeral"></div>
+		<div th:replace="MensagemErro"></div>
 		
 		<div class="panel panel-default">
 		
@@ -23,6 +24,8 @@
 		  </div>
 		  
 		  <div class="panel-body">
+		  
+		  	  <input type="hidden" th:field="*{codigo}"/>
 		   	
 		   	  <div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? 'has-error'">
 			    <label for="nome" class="col-sm-2 control-label">Nome</label>
@@ -41,7 +44,7 @@
 			  <div class="form-group">
 				<label for="vinculo" class="col-sm-2 control-label">Vinculo</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="vinculoApoiador">
+					<select class="form-control" th:field="*{vinculoApoiador}">
 						<option th:each="vinculo : ${todosVinculos}" th:value="${vinculo}" th:text="${vinculo.descricao}"></option>
                    	</select>
                 </div>
@@ -50,7 +53,7 @@
 			  <div class="form-group">
 				<label for="segmento" class="col-sm-2 control-label">Segmento</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="segmentoApoiador">
+					<select class="form-control" th:field="*{segmentoApoiador}">
 						<option th:each="segmento : ${todosSegmentos}" th:value="${segmento}" th:text="${segmento.descricao}"></option>
                    	</select>
                 </div>
@@ -59,7 +62,7 @@
 			  <div class="form-group">
 				<label for="status" class="col-sm-2 control-label">Apoio Confirmado</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="status">
+					<select class="form-control" th:field="*{status}">
 						<option th:each="status : ${todosStatusApoio}" th:value="${status}" th:text="${status.descricao}"></option>
                    	</select>
                 </div>

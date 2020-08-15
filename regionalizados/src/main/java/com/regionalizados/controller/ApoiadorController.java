@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,12 +24,15 @@ import com.regionalizados.repository.Apoiadores;
 @RequestMapping("/apoiador")
 public class ApoiadorController {
 	
+	
+	private static final String CADASTRO_VIEW = "CadastroApoiador";
+	
 	@Autowired
 	private Apoiadores apoiadores;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
-		ModelAndView mv = new ModelAndView("CadastroApoiador");
+		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
 		mv.addObject(new Apoiador());
 		return mv;
 	}
@@ -37,7 +41,7 @@ public class ApoiadorController {
 	public String salvar(@Validated Apoiador apoiador, Errors errors, RedirectAttributes attributes) {
 
 		if(errors.hasErrors()) {
-			return "CadastroApoiador";
+			return CADASTRO_VIEW;
 		}
 		
 		apoiadores.save(apoiador);
@@ -51,6 +55,22 @@ public class ApoiadorController {
 	    ModelAndView mv = new ModelAndView("PesquisaApoiadores");
 		mv.addObject("apoiadores", todosApoiadores);
 		return mv;
+	}
+	
+	@RequestMapping("{codigo}")
+	public ModelAndView edicao (@PathVariable("codigo") Apoiador apoiador) { // (@PathVariable Long codigo) {
+//		Apoiador apoiador = apoiadores.getOne(codigo);
+		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+		mv.addObject(apoiador);
+		return mv;
+	}
+	
+	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
+		apoiadores.deleteById(codigo);
+		
+		attributes.addFlashAttribute("mensagem", "Apoiador excluido com sucesso");
+		return "redirect:/apoiador";
 	}
 	
 	@ModelAttribute("todosStatusApoio")
