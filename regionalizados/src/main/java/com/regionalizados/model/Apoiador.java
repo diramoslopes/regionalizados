@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,8 +21,12 @@ public class Apoiador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
+	
+	@NotBlank(message = "o NOME não pode estar em branco")
+	@Size(max = 30, message = "o NOME nao pode conter mais de 30 caracteres")
 	private String nome;
+	
+	@NotBlank(message = "o SOBRENOME não pode estar em branco")
 	private String sobreNome;
 	
 	@Enumerated(EnumType.STRING)
