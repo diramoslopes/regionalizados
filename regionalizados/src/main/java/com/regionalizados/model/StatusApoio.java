@@ -2,8 +2,8 @@ package com.regionalizados.model;
 
 public enum StatusApoio {
 	
-	SIM("Sim"),
-	NÃO("Não");
+	SIM("SIM"),
+	NÃO("NÃO");
 	
 	private String descricao;
 	

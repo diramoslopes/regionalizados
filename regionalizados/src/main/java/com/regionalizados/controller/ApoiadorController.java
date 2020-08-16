@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,7 @@ import com.regionalizados.model.SegmentoApoiador;
 import com.regionalizados.model.StatusApoio;
 import com.regionalizados.model.VinculoApoiador;
 import com.regionalizados.repository.Apoiadores;
+import com.regionalizados.service.CadastroApoiadorService;
 
 @Controller
 @RequestMapping("/apoiador")
@@ -29,6 +31,9 @@ public class ApoiadorController {
 	
 	@Autowired
 	private Apoiadores apoiadores;
+	
+	@Autowired
+	private CadastroApoiadorService cadastroApoiadorService;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
@@ -44,7 +49,7 @@ public class ApoiadorController {
 			return CADASTRO_VIEW;
 		}
 		
-		apoiadores.save(apoiador);
+		cadastroApoiadorService.salvar(apoiador);
 		attributes.addFlashAttribute("mensagem", "Cadastro efetuado com sucesso!");
 		return "redirect:/apoiador/novo";
 	}
@@ -67,10 +72,15 @@ public class ApoiadorController {
 	
 	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
 	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
-		apoiadores.deleteById(codigo);
+		cadastroApoiadorService.excluir(codigo);
 		
 		attributes.addFlashAttribute("mensagem", "Apoiador excluido com sucesso");
 		return "redirect:/apoiador";
+	}
+	
+	@RequestMapping (value = "/{codigo}/confirmarApoio", method = RequestMethod.PUT)
+	public @ResponseBody String confirmarApoio(@PathVariable Long codigo) {
+		return cadastroApoiadorService.confirmarApoio(codigo);
 	}
 	
 	@ModelAttribute("todosStatusApoio")

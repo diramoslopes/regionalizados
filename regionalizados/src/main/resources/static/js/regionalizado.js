@@ -22,3 +22,34 @@ $('#confirmacaoExclusaoModal').on('show.bs.modal', function(event){
 	
 	
 });
+
+$(function () {
+	  $('[rel="tooltip"]').tooltip();
+	  
+	  $('.js-atualizar-statusApoio').on('click', function(event){
+		  event.preventDefault();
+		  
+		  var botaoConfirmarApoio = $(event.currentTarget);
+		  var urlConfirmarApoio =  botaoConfirmarApoio.attr('href');
+		  
+//		  console.log('urlConfirmarApoio', urlConfirmarApoio);
+		  
+		  var response = $.ajax({
+			  url: urlConfirmarApoio,
+			  type: 'PUT'
+		  });
+		  
+		  response.done(function(e){
+			  var codigoApoiador = botaoConfirmarApoio.data('codigo');
+			  $('[data-role=' + codigoApoiador + ']').html('<span class="label label-success">' + e + '</span>');
+			  botaoConfirmarApoio.hide();
+			  
+		  });
+		  
+		  response.fail(function(e){
+			  console.log(e);
+			  alert('erro confirmar apoio');
+		  })
+		  
+	  });
+});

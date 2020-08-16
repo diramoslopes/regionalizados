@@ -44,19 +44,28 @@
 		  			<td th:text="${apoiador.sobreNome}"> </td>
 		  			<td class="text-center"  th:text="${apoiador.vinculoApoiador.descricao}"> </td>
 		  			<td class="text-center"  th:text="${apoiador.segmentoApoiador.descricao}"> </td>
-		  			<td class="text-center">
+		  			<td class="text-center" th:attr="data-role=${apoiador.codigo}">
    						<span class="label" th:text="${apoiador.status.descricao}"
    							th:classappend="${apoiador.Sim ? 'label-success' : 'label-danger'}"></span>
 	   				</td>
 	   				<td class="text-center" th:text="${{apoiador.dataRegistro}}"> </td>
 		  			<td class="text-center"> 
-		  				<a class="btn btn-link btn-xs" th:href="@{/apoiador/{codigo}(codigo=${apoiador.codigo})}">
+		  				<a class="btn btn-link btn-xs" th:href="@{/apoiador/{codigo}(codigo=${apoiador.codigo})}"
+		  						title="Editar" rel="tooltip" data-placement="top">
 		  					<span class="glyphicon glyphicon-pencil"></span>
 		  				</a>
 		  				
 		  				<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
-		  						  th:attr="data-codigo=${apoiador.codigo}, data-nome=${apoiador.nome}">
+		  						  th:attr="data-codigo=${apoiador.codigo}, data-nome=${apoiador.nome}"
+		  						  title="Excluir" rel="tooltip" data-placement="top">
 		  					<span class="glyphicon glyphicon-remove"></span>
+		  				</a>
+		  				
+		  				<a class="btn btn-link btn-xs js-atualizar-statusApoio" th:if="${!apoiador.Sim}"
+		  					title="Confirmar Apoio" rel="tooltip" data-placement="top"
+		  					th:attr="data-codigo=${apoiador.codigo}"
+		  					th:href="@{/apoiador/{codigo}/confirmarApoio(codigo=${apoiador.codigo})}">
+		  					<span class="glyphicon glyphicon-check"></span>
 		  				</a>
 		  			</td>
 		  		</tr>
