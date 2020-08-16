@@ -17,65 +17,84 @@
 	  <div class="panel-heading">
 	  	<div class="clearfix">
 		    <h1 class="panel-title aw-pessoa-panel">Pesquisa de Apoiadores</h1>
-		    <a class="btn btn-link aw-link-panel" href="/apoiador/novo">Novo apoiador</a>
+		    <a class="btn btn-link aw-link-panel" th:href="@{/apoiador/novo}">Novo apoiador</a>
 	  	</div>
 	  </div>
 	  
 	  	<div class="panel-body">
-		  <table class="table table-bordered table-striped">
-		  	
-		  	<thead>
-		  		<tr>
-		  			<th class="text-center col-md-1">#</th>
-		  			<th class="text-center">Nome</th>
-		  			<th>Sobrenome</th>
-		  			<th class="text-center col-md-2">Vinculo</th>
-		  			<th class="text-center col-md-2">Segmento</th>
-		  			<th class="text-center col-md-2">Apoio Confirmado</th>
-		  			<th class="text-center col-md-2">Data de Registro</th>
-		  			<th class="text-center col-md-1">Edição</th>
-		  		</tr>
-		  	</thead>
-		  	
-		  	<tbody>
-		  		<tr th:each="apoiador : ${apoiadores}">
-		  			<td class="text-center" th:text="${apoiador.codigo}"> </td>
-		  			<td class="text-center" th:text="${apoiador.nome}"> </td>
-		  			<td th:text="${apoiador.sobreNome}"> </td>
-		  			<td class="text-center"  th:text="${apoiador.vinculoApoiador.descricao}"> </td>
-		  			<td class="text-center"  th:text="${apoiador.segmentoApoiador.descricao}"> </td>
-		  			<td class="text-center" th:attr="data-role=${apoiador.codigo}">
-   						<span class="label" th:text="${apoiador.status.descricao}"
-   							th:classappend="${apoiador.Sim ? 'label-success' : 'label-danger'}"></span>
-	   				</td>
-	   				<td class="text-center" th:text="${{apoiador.dataRegistro}}"> </td>
-		  			<td class="text-center"> 
-		  				<a class="btn btn-link btn-xs" th:href="@{/apoiador/{codigo}(codigo=${apoiador.codigo})}"
-		  						title="Editar" rel="tooltip" data-placement="top">
-		  					<span class="glyphicon glyphicon-pencil"></span>
-		  				</a>
-		  				
-		  				<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
-		  						  th:attr="data-codigo=${apoiador.codigo}, data-nome=${apoiador.nome}"
-		  						  title="Excluir" rel="tooltip" data-placement="top">
-		  					<span class="glyphicon glyphicon-remove"></span>
-		  				</a>
-		  				
-		  				<a class="btn btn-link btn-xs js-atualizar-statusApoio" th:if="${!apoiador.Sim}"
-		  					title="Confirmar Apoio" rel="tooltip" data-placement="top"
-		  					th:attr="data-codigo=${apoiador.codigo}"
-		  					th:href="@{/apoiador/{codigo}/confirmarApoio(codigo=${apoiador.codigo})}">
-		  					<span class="glyphicon glyphicon-check"></span>
-		  				</a>
-		  			</td>
-		  		</tr>
-		  	
-		  		<tr>
-		  			<td colspan="8" th:if="${#lists.isEmpty(apoiadores)}"> Nenhum apoiador foi encontrado </td>
-		  		</tr>
-		  	</tbody>
-		  	
-		  </table>
+	  	
+	  	  <form method="get" class="form-horizontal" th:action="@{/apoiador}" th:object="${filtro}">
+	  	  	<div class="form-group">
+	  	  		<div class="col-sm-4">
+	  	  			<div class="input-group">
+	  	  				<input class="form-control" placeholder="Qual apoiador você está procurando?"
+	  	  						autofocus="autofocus" th:field="*{nome}"></input>
+	  	  				<span class="input-group-btn">
+	  	  					<button type="submit" class="btn btn-defaut">
+	  	  						<i class="glyphicon glyphicon-search"></i>
+	  	  					</button>
+	  	  				</span>
+	  	  			</div>
+	  	  		</div>
+	  	  	</div>
+	  	  </form>
+		  
+		  <div class="table-responsive">	
+			  <table class="table table-bordered table-striped">
+			  	
+			  	<thead>
+			  		<tr>
+			  			<th class="text-center col-md-1">#</th>
+			  			<th class="text-center">Nome</th>
+			  			<th>Sobrenome</th>
+			  			<th class="text-center col-md-2">Vínculo</th>
+			  			<th class="text-center col-md-2">Segmento</th>
+			  			<th class="text-center col-md-2">Apoio Confirmado</th>
+			  			<th class="text-center col-md-2">Data de Registro</th>
+			  			<th class="text-center col-md-1">Edição</th>
+			  		</tr>
+			  	</thead>
+			  	
+			  	<tbody>
+			  		<tr th:each="apoiador : ${apoiadores}">
+			  			<td class="text-center" th:text="${apoiador.codigo}"> </td>
+			  			<td class="text-center" th:text="${apoiador.nome}"> </td>
+			  			<td th:text="${apoiador.sobreNome}"> </td>
+			  			<td class="text-center"  th:text="${apoiador.vinculoApoiador.descricao}"> </td>
+			  			<td class="text-center"  th:text="${apoiador.segmentoApoiador.descricao}"> </td>
+			  			<td class="text-center" th:attr="data-role=${apoiador.codigo}">
+	   						<span class="label" th:text="${apoiador.status.descricao}"
+	   							th:classappend="${apoiador.Sim ? 'label-success' : 'label-danger'}"></span>
+		   				</td>
+		   				<td class="text-center" th:text="${{apoiador.dataRegistro}}"> </td>
+			  			<td class="text-center"> 
+			  				<a class="btn btn-link btn-xs" th:href="@{/apoiador/{codigo}(codigo=${apoiador.codigo})}"
+			  						title="Editar" rel="tooltip" data-placement="top">
+			  					<span class="glyphicon glyphicon-pencil"></span>
+			  				</a>
+			  				
+			  				<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+			  						  th:attr="data-codigo=${apoiador.codigo}, data-nome=${apoiador.nome}"
+			  						  title="Excluir" rel="tooltip" data-placement="top">
+			  					<span class="glyphicon glyphicon-remove"></span>
+			  				</a>
+			  				
+			  				<a class="btn btn-link btn-xs js-atualizar-statusApoio" th:if="${!apoiador.Sim}"
+			  					title="Confirmar Apoio" rel="tooltip" data-placement="top"
+			  					th:attr="data-codigo=${apoiador.codigo}"
+			  					th:href="@{/apoiador/{codigo}/confirmarApoio(codigo=${apoiador.codigo})}">
+			  					<span class="glyphicon glyphicon-check"></span>
+			  				</a>
+			  			</td>
+			  		</tr>
+			  	
+			  		<tr>
+			  			<td colspan="8" th:if="${#lists.isEmpty(apoiadores)}"> Nenhum apoiador foi encontrado </td>
+			  		</tr>
+			  	</tbody>
+			  	
+			  </table>
+		  </div>
 		</div>
 		
 		<div th:replace="DialogoConfirmacaoExclusao"></div>

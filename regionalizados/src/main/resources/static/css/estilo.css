@@ -1,6 +1,11 @@
-.panel-default, .alert{
-	margin: 10px;
+/* tela grande */
+
+@media(min-width: 768px){
+	.panel-default, .alert{
+		margin: 10px;
+	}
 }
+/* ------- */
 
 .aw-link-panel{
 	float: right;
@@ -11,3 +16,4 @@
 	float: left;
 	padding-top: 3px;
 }
+

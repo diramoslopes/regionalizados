@@ -9,7 +9,7 @@
 </head>
  
  <section layout:fragment="conteudo">
-	<form class="form-horizontal" method="post" action="/apoiador" th:object="${apoiador}">
+	<form class="form-horizontal" method="post" th:action="@{/apoiador}" th:object="${apoiador}">
 		
 		<div th:replace="MensagemGeral"></div>
 		<div th:replace="MensagemErro"></div>
@@ -19,7 +19,7 @@
 		  <div class="panel-heading">
 		  	<div class="clearfix">
 			    <h1 class="panel-title aw-pessoa-panel">Novo Apoiador</h1>
-			    <a class="btn btn-link aw-link-panel" href="/apoiador">Pesquisar apoiadores</a>
+			    <a class="btn btn-link aw-link-panel" th:href="@{/apoiador}">Pesquisar apoiadores</a>
 		  	</div>
 		  </div>
 		  

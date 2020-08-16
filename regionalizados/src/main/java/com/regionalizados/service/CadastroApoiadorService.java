@@ -1,11 +1,14 @@
 package com.regionalizados.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.regionalizados.model.Apoiador;
 import com.regionalizados.model.StatusApoio;
 import com.regionalizados.repository.Apoiadores;
+import com.regionalizados.repository.filter.ApoiadorFilter;
 
 @Service
 public class CadastroApoiadorService {
@@ -27,6 +30,11 @@ public class CadastroApoiadorService {
 		apoiadores.save(apoiador);
 		
 		return StatusApoio.SIM.getDescricao();
+	}
+	
+	public List<Apoiador> filtrar(ApoiadorFilter filtro){
+		String nome = filtro.getNome() == null ? "" : filtro.getNome();
+	    return apoiadores.findByNomeContaining(nome);
 	}
 	
 }

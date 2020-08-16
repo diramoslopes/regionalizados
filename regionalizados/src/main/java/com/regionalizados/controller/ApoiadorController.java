@@ -19,7 +19,7 @@ import com.regionalizados.model.Apoiador;
 import com.regionalizados.model.SegmentoApoiador;
 import com.regionalizados.model.StatusApoio;
 import com.regionalizados.model.VinculoApoiador;
-import com.regionalizados.repository.Apoiadores;
+import com.regionalizados.repository.filter.ApoiadorFilter;
 import com.regionalizados.service.CadastroApoiadorService;
 
 @Controller
@@ -28,9 +28,6 @@ public class ApoiadorController {
 	
 	
 	private static final String CADASTRO_VIEW = "CadastroApoiador";
-	
-	@Autowired
-	private Apoiadores apoiadores;
 	
 	@Autowired
 	private CadastroApoiadorService cadastroApoiadorService;
@@ -55,8 +52,11 @@ public class ApoiadorController {
 	}
 	
 	@RequestMapping
-	public ModelAndView pesquisar() {
-	    List<Apoiador> todosApoiadores =	apoiadores.findAll();
+//	public ModelAndView pesquisar(@RequestParam(defaultValue = "") String nome) {
+//	    List<Apoiador> todosApoiadores =	apoiadores.findAll();
+		public ModelAndView pesquisar(@ModelAttribute("filtro") ApoiadorFilter filtro) {
+		List<Apoiador> todosApoiadores = cadastroApoiadorService.filtrar(filtro);
+	    
 	    ModelAndView mv = new ModelAndView("PesquisaApoiadores");
 		mv.addObject("apoiadores", todosApoiadores);
 		return mv;
