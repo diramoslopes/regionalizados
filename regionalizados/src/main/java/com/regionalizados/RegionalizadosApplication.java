@@ -15,6 +15,7 @@ import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 public class RegionalizadosApplication {
 
 	public static void main(String[] args) {
+//	System.out.println(new BCryptPasswordEncoder().encode("leticia"));
 		SpringApplication.run(RegionalizadosApplication.class, args);
 	}
 	
@@ -32,6 +33,4 @@ public class RegionalizadosApplication {
 		}	
 		
 	}
-	
-
 }

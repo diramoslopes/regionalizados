@@ -36,5 +36,4 @@ public class CadastroApoiadorService {
 		String nome = filtro.getNome() == null ? "" : filtro.getNome();
 	    return apoiadores.findByNomeContaining(nome);
 	}
-	
 }

@@ -30,7 +30,7 @@
 	  	  				<input class="form-control" placeholder="Qual apoiador você está procurando?"
 	  	  						autofocus="autofocus" th:field="*{nome}"></input>
 	  	  				<span class="input-group-btn">
-	  	  					<button type="submit" class="btn btn-defaut">
+	  	  					<button type="submit" class="btn btn-defaut" title="Pesquisar" rel="tooltip" data-placement="right">
 	  	  						<i class="glyphicon glyphicon-search"></i>
 	  	  					</button>
 	  	  				</span>
@@ -69,13 +69,13 @@
 		   				<td class="text-center" th:text="${{apoiador.dataRegistro}}"> </td>
 			  			<td class="text-center"> 
 			  				<a class="btn btn-link btn-xs" th:href="@{/apoiador/{codigo}(codigo=${apoiador.codigo})}"
-			  						title="Editar" rel="tooltip" data-placement="top">
+			  						title="Editar" rel="tooltip" data-placement="left">
 			  					<span class="glyphicon glyphicon-pencil"></span>
 			  				</a>
 			  				
 			  				<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
 			  						  th:attr="data-codigo=${apoiador.codigo}, data-nome=${apoiador.nome}"
-			  						  title="Excluir" rel="tooltip" data-placement="top">
+			  						  title="Excluir" rel="tooltip" data-placement="right">
 			  					<span class="glyphicon glyphicon-remove"></span>
 			  				</a>
 			  				

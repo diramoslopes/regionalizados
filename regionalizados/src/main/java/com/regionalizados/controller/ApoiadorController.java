@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,21 +28,35 @@ import com.regionalizados.service.CadastroApoiadorService;
 @RequestMapping("/apoiador")
 public class ApoiadorController {
 	
+		private static final String CADASTRO_VIEW = "CadastroApoiador";
 	
-	private static final String CADASTRO_VIEW = "CadastroApoiador";
+		@Autowired
+		private CadastroApoiadorService cadastroApoiadorService;
 	
-	@Autowired
-	private CadastroApoiadorService cadastroApoiadorService;
+		@GetMapping("/login")
+		public String login() {
+		return "login";
+	}
 	
-	@RequestMapping("/novo")
-	public ModelAndView novo() {
+		@GetMapping({"/login-error"})
+		public String loginError(ModelMap model) {
+		model.addAttribute("alerta", "erro");
+		model.addAttribute("titulo", "Credenciais inválidas");
+		model.addAttribute("texto", "Login ou senha incorretos, tente novamente.");
+		model.addAttribute("subtexto", "Acesso permitido apenas para cadastros já ativados.");
+		
+		return "login";
+	}
+	
+		@RequestMapping("/novo")
+		public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
 		mv.addObject(new Apoiador());
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public String salvar(@Validated Apoiador apoiador, Errors errors, RedirectAttributes attributes) {
+		@RequestMapping(method = RequestMethod.POST)
+		public String salvar(@Validated Apoiador apoiador, Errors errors, RedirectAttributes attributes) {
 
 		if(errors.hasErrors()) {
 			return CADASTRO_VIEW;
@@ -51,9 +67,7 @@ public class ApoiadorController {
 		return "redirect:/apoiador/novo";
 	}
 	
-	@RequestMapping
-//	public ModelAndView pesquisar(@RequestParam(defaultValue = "") String nome) {
-//	    List<Apoiador> todosApoiadores =	apoiadores.findAll();
+		@RequestMapping
 		public ModelAndView pesquisar(@ModelAttribute("filtro") ApoiadorFilter filtro) {
 		List<Apoiador> todosApoiadores = cadastroApoiadorService.filtrar(filtro);
 	    
@@ -62,39 +76,38 @@ public class ApoiadorController {
 		return mv;
 	}
 	
-	@RequestMapping("{codigo}")
-	public ModelAndView edicao (@PathVariable("codigo") Apoiador apoiador) { // (@PathVariable Long codigo) {
-//		Apoiador apoiador = apoiadores.getOne(codigo);
+		@RequestMapping("{codigo}")
+		public ModelAndView edicao (@PathVariable("codigo") Apoiador apoiador) {
 		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
 		mv.addObject(apoiador);
 		return mv;
 	}
 	
-	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
-	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
+		@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+		public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
 		cadastroApoiadorService.excluir(codigo);
 		
 		attributes.addFlashAttribute("mensagem", "Apoiador excluido com sucesso");
 		return "redirect:/apoiador";
 	}
 	
-	@RequestMapping (value = "/{codigo}/confirmarApoio", method = RequestMethod.PUT)
-	public @ResponseBody String confirmarApoio(@PathVariable Long codigo) {
+		@RequestMapping (value = "/{codigo}/confirmarApoio", method = RequestMethod.PUT)
+		public @ResponseBody String confirmarApoio(@PathVariable Long codigo) {
 		return cadastroApoiadorService.confirmarApoio(codigo);
 	}
 	
-	@ModelAttribute("todosStatusApoio")
-	public List<StatusApoio> todosStatusApoio() {
+		@ModelAttribute("todosStatusApoio")
+		public List<StatusApoio> todosStatusApoio() {
 		return Arrays.asList(StatusApoio.values());
 	}
 	
-	@ModelAttribute("todosVinculos")
-	public List<VinculoApoiador> todosVinculos() {
+		@ModelAttribute("todosVinculos")
+		public List<VinculoApoiador> todosVinculos() {
 		return Arrays.asList(VinculoApoiador.values());
 	}
 	
-	@ModelAttribute("todosSegmentos")
-	public List<SegmentoApoiador> todosSegmentos() {
+		@ModelAttribute("todosSegmentos")
+		public List<SegmentoApoiador> todosSegmentos() {
 		return Arrays.asList(SegmentoApoiador.values());
 	}
 }
